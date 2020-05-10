@@ -1,7 +1,8 @@
 import React from 'react'
+import PlayGame from './PlayGame'
 
 function App() {
-  return <h1>Blah</h1>
+  return <PlayGame />
 }
 
 export default App
