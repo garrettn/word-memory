@@ -43,11 +43,17 @@ const gameMachine = Machine(
       isMatch: {
         entry: ['collectWord'],
         after: {
-          5000: 'idle',
+          500: 'idle',
+        },
+        on: {
+          '': {
+            target: 'end',
+            cond: 'allCollected',
+          },
         },
       },
       isNotMatch: {
-        after: { 5000: 'idle' },
+        after: { 500: 'idle' },
       },
       end: {},
     },
@@ -74,6 +80,8 @@ const gameMachine = Machine(
     guards: {
       checkIsMatch: (context) =>
         context.firstPick.word === context.secondPick.word,
+      allCollected: (context) =>
+        Object.values(context.collectedWords).every((w) => w),
     },
   }
 )

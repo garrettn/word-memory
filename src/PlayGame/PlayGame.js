@@ -17,6 +17,7 @@ function PlayGame() {
       <h1>Play Game!</h1>
       {state.value === 'isMatch' ? <p>You got a match!</p> : null}
       {state.value === 'isNotMatch' ? <p>Try again!</p> : null}
+      {state.value === 'end' ? <p>You win!</p> : null}
       {Object.entries(cardIds).map(([id, word]) => (
         <WordCard
           key={id}
