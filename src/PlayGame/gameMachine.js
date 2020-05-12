@@ -39,7 +39,9 @@ const gameMachine = Machine(
           ],
         },
       },
-      isMatch: {},
+      isMatch: {
+        entry: ['collectWord'],
+      },
       isNotMatch: {},
       end: {},
     },
@@ -51,6 +53,12 @@ const gameMachine = Machine(
       }),
       pickSecond: assign({
         secondPick: (context, { id, word }) => ({ id, word }),
+      }),
+      collectWord: assign({
+        collectedWords: (context) => ({
+          ...context.collectedWords,
+          [context.firstPick.word]: true,
+        }),
       }),
     },
     guards: {
