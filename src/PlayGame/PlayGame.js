@@ -1,23 +1,15 @@
-import React, { useState } from 'react'
-import WordCard from '../WordCard'
-
-const words = ['foo', 'bar', 'baz', 'qux']
+import React from 'react'
+import JSONTree from 'react-json-tree'
+import { useMachine } from '@xstate/react'
+// import WordCard from '../WordCard'
+import gameMachine from './gameMachine'
 
 function PlayGame() {
-  const [flippedWords, updateFlippedWords] = useState([])
+  const [state, send] = useMachine(gameMachine, { devTools: true })
   return (
     <>
       <h1>Play Game!</h1>
-      <>
-        {words.map((word) => (
-          <WordCard
-            key={word}
-            word={word}
-            isFlipped={flippedWords.includes(word)}
-            onFlip={() => updateFlippedWords([...flippedWords, word])}
-          />
-        ))}
-      </>
+      <JSONTree data={state.toJSON()} />
     </>
   )
 }
