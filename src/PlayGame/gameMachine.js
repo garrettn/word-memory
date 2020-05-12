@@ -16,6 +16,7 @@ const gameMachine = Machine(
     },
     states: {
       idle: {
+        entry: ['clearPicks'],
         on: {
           PICK: {
             target: 'onePicked',
@@ -41,13 +42,22 @@ const gameMachine = Machine(
       },
       isMatch: {
         entry: ['collectWord'],
+        after: {
+          5000: 'idle',
+        },
       },
-      isNotMatch: {},
+      isNotMatch: {
+        after: { 5000: 'idle' },
+      },
       end: {},
     },
   },
   {
     actions: {
+      clearPicks: assign({
+        firstPick: {},
+        secondPick: {},
+      }),
       pickFirst: assign({
         firstPick: (context, { id, word }) => ({ id, word }),
       }),
