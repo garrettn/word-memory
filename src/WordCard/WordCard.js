@@ -1,7 +1,17 @@
 import React from 'react'
 
-function WordCard({ isFlipped, onFlip, word }) {
-  return isFlipped ? <span>{word}</span> : <button onClick={onFlip}>?</button>
+function WordCard({ isCollected, isFlipped, onFlip, word }) {
+  return (
+    <div>
+      {isFlipped ? (
+        <span>
+          {word} {isCollected ? '✅' : ''}
+        </span>
+      ) : (
+        <button onClick={onFlip}>?</button>
+      )}
+    </div>
+  )
 }
 
 export default WordCard
