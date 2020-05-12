@@ -1,12 +1,12 @@
 import React from 'react'
 import { useMachine } from '@xstate/react'
 import WordCard from '../WordCard'
-import gameMachine from './gameMachine'
+import createGameMachine from './gameMachine'
 
 const words = ['foo', 'bar', 'baz', 'qux']
 
 function PlayGame() {
-  const [state, send] = useMachine(gameMachine, { devTools: true })
+  const [state, send] = useMachine(createGameMachine(words), { devTools: true })
   return (
     <>
       <h1>Play Game!</h1>
