@@ -1,13 +1,14 @@
 import { Machine, assign } from 'xstate'
 
-const words = ['foo', 'bar', 'baz', 'qux']
+const initialWords = ['foo', 'bar', 'baz', 'qux']
 
 const gameMachine = Machine(
   {
     id: 'playGame',
-    initial: 'idle',
+    initial: 'initializing',
     context: {
-      collectedWords: words.reduce((cards, word) => {
+      cards: [],
+      collectedWords: initialWords.reduce((cards, word) => {
         cards[word] = false
         return cards
       }, {}),
@@ -15,6 +16,12 @@ const gameMachine = Machine(
       secondPick: {},
     },
     states: {
+      initializing: {
+        entry: ['createCards'],
+        on: {
+          '': 'idle',
+        },
+      },
       idle: {
         entry: ['clearPicks'],
         on: {
@@ -60,6 +67,12 @@ const gameMachine = Machine(
   },
   {
     actions: {
+      createCards: assign({
+        cards: initialWords.reduce((cs, word) => {
+          cs.push({ id: `${word}1`, word }, { id: `${word}2`, word })
+          return cs
+        }, []),
+      }),
       clearPicks: assign({
         firstPick: {},
         secondPick: {},

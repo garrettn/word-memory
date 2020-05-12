@@ -7,18 +7,13 @@ const words = ['foo', 'bar', 'baz', 'qux']
 
 function PlayGame() {
   const [state, send] = useMachine(gameMachine, { devTools: true })
-  const cardIds = words.reduce((ids, word) => {
-    ids[`${word}1`] = word
-    ids[`${word}2`] = word
-    return ids
-  }, {})
   return (
     <>
       <h1>Play Game!</h1>
       {state.value === 'isMatch' ? <p>You got a match!</p> : null}
       {state.value === 'isNotMatch' ? <p>Try again!</p> : null}
       {state.value === 'end' ? <p>You win!</p> : null}
-      {Object.entries(cardIds).map(([id, word]) => (
+      {state.context.cards.map(({ id, word }) => (
         <WordCard
           key={id}
           isCollected={state.context.collectedWords[word]}
