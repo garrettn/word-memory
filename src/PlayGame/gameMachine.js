@@ -11,8 +11,8 @@ const gameMachine = Machine(
         cards[word] = false
         return cards
       }, {}),
-      firstPick: null,
-      secondPick: null,
+      firstPick: {},
+      secondPick: {},
     },
     states: {
       idle: {
@@ -31,7 +31,14 @@ const gameMachine = Machine(
           },
         },
       },
-      twoPicked: {},
+      twoPicked: {
+        on: {
+          '': [
+            { target: 'isMatch', cond: 'checkIsMatch' },
+            { target: 'isNotMatch' },
+          ],
+        },
+      },
       isMatch: {},
       isNotMatch: {},
       end: {},
@@ -40,11 +47,15 @@ const gameMachine = Machine(
   {
     actions: {
       pickFirst: assign({
-        firstPick: (context, event) => event.id,
+        firstPick: (context, { id, word }) => ({ id, word }),
       }),
       pickSecond: assign({
-        secondPick: (context, event) => event.id,
+        secondPick: (context, { id, word }) => ({ id, word }),
       }),
+    },
+    guards: {
+      checkIsMatch: (context) =>
+        context.firstPick.word === context.secondPick.word,
     },
   }
 )

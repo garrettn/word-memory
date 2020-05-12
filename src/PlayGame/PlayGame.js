@@ -15,13 +15,15 @@ function PlayGame() {
   return (
     <>
       <h1>Play Game!</h1>
+      {state.value === 'isMatch' ? <p>You got a match!</p> : null}
       {Object.entries(cardIds).map(([id, word]) => (
         <WordCard
           key={id}
           isFlipped={
-            state.context.firstPick === id || state.context.secondPick === id
+            state.context.firstPick.id === id ||
+            state.context.secondPick.id === id
           }
-          onFlip={() => send({ type: 'PICK', id })}
+          onFlip={() => send({ type: 'PICK', id, word })}
           word={word}
         />
       ))}
