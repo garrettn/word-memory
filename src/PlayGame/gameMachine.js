@@ -50,7 +50,7 @@ function createGameMachine(initialWords) {
         isMatch: {
           entry: ['collectWord'],
           after: {
-            500: 'idle',
+            2000: 'idle',
           },
           on: {
             '': {
@@ -60,7 +60,7 @@ function createGameMachine(initialWords) {
           },
         },
         isNotMatch: {
-          after: { 500: 'idle' },
+          after: { 2000: 'idle' },
         },
         end: {},
       },

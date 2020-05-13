@@ -5,14 +5,27 @@ import createGameMachine from './gameMachine'
 
 const words = ['foo', 'bar', 'baz', 'qux']
 
+function Message({ state }) {
+  switch (state) {
+    case 'onePicked':
+      return <p>Pick another card.</p>
+    case 'isMatch':
+      return <p>You got a match!</p>
+    case 'isNotMatch':
+      return <p>Try again!</p>
+    case 'end':
+      return <p>You win!</p>
+    default:
+      return <p>Pick a card.</p>
+  }
+}
+
 function PlayGame() {
   const [state, send] = useMachine(createGameMachine(words), { devTools: true })
   return (
     <>
       <h1>Play Game!</h1>
-      {state.value === 'isMatch' ? <p>You got a match!</p> : null}
-      {state.value === 'isNotMatch' ? <p>Try again!</p> : null}
-      {state.value === 'end' ? <p>You win!</p> : null}
+      <Message state={state.value} />
       {state.context.cards.map(({ id, word }) => (
         <WordCard
           key={id}
