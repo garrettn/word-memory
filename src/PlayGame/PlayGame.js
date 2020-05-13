@@ -1,24 +1,25 @@
 import React from 'react'
 import { useMachine } from '@xstate/react'
+import classnames from 'classnames'
 import WordCard from '../WordCard'
 import createGameMachine from './gameMachine'
 import styles from './PlayGame.module.css'
 
 const words = ['foo', 'bar', 'baz', 'qux']
 
-function Message({ state }) {
+function getMessage(state) {
   switch (state) {
     case 'onePicked':
     case 'twoPicked':
-      return <p>Pick another card.</p>
+      return 'Pick another card.'
     case 'isMatch':
-      return <p>You got a match!</p>
+      return 'You got a match!'
     case 'isNotMatch':
-      return <p>Try again!</p>
+      return 'Try again!'
     case 'end':
-      return <p>You win!</p>
+      return 'You win!'
     default:
-      return <p>Pick a card.</p>
+      return 'Pick a card.'
   }
 }
 
@@ -26,8 +27,13 @@ function PlayGame() {
   const [state, send] = useMachine(createGameMachine(words), { devTools: true })
   return (
     <div className={styles.container}>
-      <h1>Play Game!</h1>
-      <Message state={state.value} />
+      <p
+        className={classnames(styles.message, {
+          [styles.success]: ['isMatch', 'end'].includes(state.value),
+        })}
+      >
+        {getMessage(state.value)}
+      </p>
       <div className={styles.grid}>
         {state.context.cards.map(({ id, word }) => {
           const isPicked = [

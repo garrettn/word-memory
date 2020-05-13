@@ -11,3 +11,11 @@
   grid-auto-rows: minmax(var(--card-size), auto);
   gap: 1rem;
 }
+
+.message {
+  font-size: 2rem;
+}
+
+.message.success {
+  color: #48bb78;
+}
