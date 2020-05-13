@@ -1,4 +1,5 @@
 import { Machine, assign } from 'xstate'
+import shuffle from 'fast-shuffle'
 
 function createGameMachine(initialWords) {
   return Machine(
@@ -16,7 +17,7 @@ function createGameMachine(initialWords) {
       },
       states: {
         initializing: {
-          entry: ['createCards'],
+          entry: ['createCards', 'shuffleCards'],
           on: {
             '': 'idle',
           },
@@ -71,6 +72,9 @@ function createGameMachine(initialWords) {
             cs.push({ id: `${word}1`, word }, { id: `${word}2`, word })
             return cs
           }, []),
+        }),
+        shuffleCards: assign({
+          cards: (context) => shuffle(context.cards),
         }),
         clearPicks: assign({
           firstPick: {},
