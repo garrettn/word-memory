@@ -2,6 +2,7 @@ import React from 'react'
 import { useMachine } from '@xstate/react'
 import WordCard from '../WordCard'
 import createGameMachine from './gameMachine'
+import styles from './PlayGame.module.css'
 
 const words = ['foo', 'bar', 'baz', 'qux']
 
@@ -23,22 +24,24 @@ function Message({ state }) {
 function PlayGame() {
   const [state, send] = useMachine(createGameMachine(words), { devTools: true })
   return (
-    <>
+    <div className={styles.container}>
       <h1>Play Game!</h1>
       <Message state={state.value} />
-      {state.context.cards.map(({ id, word }) => (
-        <WordCard
-          key={id}
-          isCollected={state.context.collectedWords[word]}
-          isFlipped={
-            state.context.firstPick.id === id ||
-            state.context.secondPick.id === id
-          }
-          onFlip={() => send({ type: 'PICK', id, word })}
-          word={word}
-        />
-      ))}
-    </>
+      <div className={styles.grid}>
+        {state.context.cards.map(({ id, word }) => (
+          <WordCard
+            key={id}
+            isCollected={state.context.collectedWords[word]}
+            isFlipped={
+              state.context.firstPick.id === id ||
+              state.context.secondPick.id === id
+            }
+            onFlip={() => send({ type: 'PICK', id, word })}
+            word={word}
+          />
+        ))}
+      </div>
+    </div>
   )
 }
 
