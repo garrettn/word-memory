@@ -40,8 +40,8 @@ function createGameMachine(initialWords) {
           },
         },
         twoPicked: {
-          on: {
-            '': [
+          after: {
+            500: [
               { target: 'isMatch', cond: 'checkIsMatch' },
               { target: 'isNotMatch' },
             ],

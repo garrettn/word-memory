@@ -9,6 +9,7 @@ const words = ['foo', 'bar', 'baz', 'qux']
 function Message({ state }) {
   switch (state) {
     case 'onePicked':
+    case 'twoPicked':
       return <p>Pick another card.</p>
     case 'isMatch':
       return <p>You got a match!</p>
