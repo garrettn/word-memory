@@ -17,7 +17,7 @@ function getMessage(state) {
     case 'isNotMatch':
       return 'Try again!'
     case 'end':
-      return 'You win!'
+      return '🎉 You win! 🎉'
     default:
       return 'Pick a card.'
   }

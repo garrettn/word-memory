@@ -25,6 +25,10 @@ function createGameMachine(initialWords) {
         idle: {
           entry: ['clearPicks'],
           on: {
+            '': {
+              target: 'end',
+              cond: 'allCollected',
+            },
             PICK: {
               target: 'onePicked',
               actions: ['pickFirst'],
@@ -51,12 +55,6 @@ function createGameMachine(initialWords) {
           exit: ['collectWord'],
           after: {
             2000: 'idle',
-          },
-          on: {
-            '': {
-              target: 'end',
-              cond: 'allCollected',
-            },
           },
         },
         isNotMatch: {
