@@ -48,7 +48,7 @@ function createGameMachine(initialWords) {
           },
         },
         isMatch: {
-          entry: ['collectWord'],
+          exit: ['collectWord'],
           after: {
             2000: 'idle',
           },
