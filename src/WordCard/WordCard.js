@@ -1,18 +1,19 @@
 import React from 'react'
+import classnames from 'classnames'
 import styles from './WordCard.module.css'
 
-function WordCard({ isCollected, isFlipped, onFlip, word }) {
+function WordCard({ isCollected, isCorrect, isPicked, onPick, word }) {
+  const isFaceUp = isPicked || isCorrect || isCollected
   return (
-    <div className={styles.card}>
-      {isCollected || isFlipped ? (
+    <div className={classnames(styles.card, { [styles.isFaceUp]: isFaceUp })}>
+      <div className={styles.face}>
         <span>
-          {word} {isCollected ? '✅' : ''}
+          {word} {isCorrect || isCollected ? '✅' : ''}
         </span>
-      ) : (
-        <button onClick={onFlip} className={styles.button}>
-          ?
-        </button>
-      )}
+      </div>
+      <button className={styles.back} onClick={onPick}>
+        ?
+      </button>
     </div>
   )
 }

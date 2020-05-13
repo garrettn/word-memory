@@ -28,18 +28,22 @@ function PlayGame() {
       <h1>Play Game!</h1>
       <Message state={state.value} />
       <div className={styles.grid}>
-        {state.context.cards.map(({ id, word }) => (
-          <WordCard
-            key={id}
-            isCollected={state.context.collectedWords[word]}
-            isFlipped={
-              state.context.firstPick.id === id ||
-              state.context.secondPick.id === id
-            }
-            onFlip={() => send({ type: 'PICK', id, word })}
-            word={word}
-          />
-        ))}
+        {state.context.cards.map(({ id, word }) => {
+          const isPicked = [
+            state.context.firstPick.id,
+            state.context.secondPick.id,
+          ].includes(id)
+          return (
+            <WordCard
+              key={id}
+              isCollected={state.context.collectedWords[word]}
+              isCorrect={isPicked && state.value === 'isMatch'}
+              isPicked={isPicked}
+              onPick={() => send({ type: 'PICK', id, word })}
+              word={word}
+            />
+          )
+        })}
       </div>
     </div>
   )
