@@ -25,10 +25,13 @@ function createGameMachine(initialWords) {
         idle: {
           entry: ['clearPicks'],
           on: {
-            '': {
-              target: 'end',
-              cond: 'allCollected',
-            },
+            '': [
+              { target: 'empty', cond: 'noWords' },
+              {
+                target: 'end',
+                cond: 'allCollected',
+              },
+            ],
             PICK: {
               target: 'onePicked',
               actions: ['pickFirst'],
@@ -61,6 +64,7 @@ function createGameMachine(initialWords) {
           after: { 2000: 'idle' },
         },
         end: {},
+        empty: {},
       },
     },
     {
@@ -96,6 +100,7 @@ function createGameMachine(initialWords) {
           context.firstPick.word === context.secondPick.word,
         allCollected: (context) =>
           Object.values(context.collectedWords).every((w) => w),
+        noWords: (context) => !context.cards.length,
       },
     }
   )
