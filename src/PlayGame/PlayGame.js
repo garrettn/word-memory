@@ -5,8 +5,6 @@ import WordCard from '../WordCard'
 import createGameMachine from './gameMachine'
 import styles from './PlayGame.module.css'
 
-const words = ['foo', 'bar', 'baz', 'qux']
-
 function getMessage(state) {
   switch (state) {
     case 'onePicked':
@@ -24,6 +22,8 @@ function getMessage(state) {
 }
 
 function PlayGame() {
+  const params = new URLSearchParams(window.location.search.slice(1))
+  const words = params.getAll('w')
   const [state, send] = useMachine(createGameMachine(words), { devTools: true })
   return (
     <div className={styles.container}>
