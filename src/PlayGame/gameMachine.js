@@ -26,7 +26,6 @@ function createGameMachine(initialWords) {
           entry: ['clearPicks'],
           on: {
             '': [
-              { target: 'empty', cond: 'noWords' },
               {
                 target: 'end',
                 cond: 'allCollected',
@@ -100,7 +99,6 @@ function createGameMachine(initialWords) {
           context.firstPick.word === context.secondPick.word,
         allCollected: (context) =>
           Object.values(context.collectedWords).every((w) => w),
-        noWords: (context) => !context.cards.length,
       },
     }
   )

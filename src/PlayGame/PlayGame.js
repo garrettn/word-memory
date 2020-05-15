@@ -16,16 +16,12 @@ function getMessage(state) {
       return 'Try again!'
     case 'end':
       return '🎉 You win! 🎉'
-    case 'empty':
-      return 'Add some words to the URL to play.'
     default:
       return 'Pick a card.'
   }
 }
 
-function PlayGame() {
-  const params = new URLSearchParams(window.location.search.slice(1))
-  const words = params.getAll('w')
+function PlayGame({ words = [] }) {
   const [state, send] = useMachine(createGameMachine(words), { devTools: true })
   return (
     <div className={styles.container}>
@@ -36,16 +32,6 @@ function PlayGame() {
       >
         {getMessage(state.value)}
       </p>
-      {state.value === 'empty' ? (
-        <>
-          <p>For example:</p>
-          <p>
-            <a href={`${window.location.href}?w=one&w=two&w=three&w=four`}>
-              {window.location.href}?w=one&w=two&w=three&w=four
-            </a>
-          </p>
-        </>
-      ) : null}
       <div className={styles.grid}>
         {state.context.cards.map(({ id, word }) => {
           const isPicked = [
