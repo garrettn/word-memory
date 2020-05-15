@@ -1,6 +1,7 @@
 import React from 'react'
 import { useMachine } from '@xstate/react'
 import classnames from 'classnames'
+import Main from '../Main'
 import WordCard from '../WordCard'
 import createGameMachine from './gameMachine'
 import styles from './PlayGame.module.css'
@@ -24,7 +25,7 @@ function getMessage(state) {
 function PlayGame({ words = [] }) {
   const [state, send] = useMachine(createGameMachine(words), { devTools: true })
   return (
-    <div className={styles.container}>
+    <Main className={styles.container}>
       <p
         className={classnames(styles.message, {
           [styles.success]: ['isMatch', 'end'].includes(state.value),
@@ -50,7 +51,7 @@ function PlayGame({ words = [] }) {
           )
         })}
       </div>
-    </div>
+    </Main>
   )
 }
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Main from '../Main'
 import styles from './ConfigureGame.module.css'
 
 function ConfigureGame() {
@@ -7,7 +8,7 @@ function ConfigureGame() {
   const searchString = `?w=${words.join('&w=')}`
   const linkUrl = window.location.href + searchString
   return (
-    <div className={styles.container}>
+    <Main className={styles.container}>
       <h1>Word Memory</h1>
       <label htmlFor="words" className={styles.label}>
         Create your list of words:
@@ -28,7 +29,7 @@ function ConfigureGame() {
           </p>
         </>
       ) : null}
-    </div>
+    </Main>
   )
 }
 
